@@ -514,13 +514,17 @@ _anchors:
     kcidb_test_suite: kernelci_wifi_basic
 
   wifi-basic-cros-kernel: &wifi-basic-cros-kernel-job
-    <<: *wifi-basic-job
-    params:
-      <<: *wifi-basic-job-params
+    template: generic.jinja2
+    kind: job
+    params: &wifi-basic-cros-kernel-job-params
+      test_method: wifi-basic
+      boot_commands: nfs
+      nfsroot: 'https://storage.kernelci.org/images/rootfs/debian/bookworm-wifi/20250925.0/{debarch}/'
       extra_kernel_args: "lsm=capability,landlock,yama,safesetid,selinux,bpf"
     rules:
       tree:
         - chromiumos
+    kcidb_test_suite: kernelci_wifi_basic
 
 jobs:
 
